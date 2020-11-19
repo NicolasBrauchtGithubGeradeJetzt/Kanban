@@ -11,29 +11,6 @@
 
     </main>
 
-    <script type="text/javascript">
-    async function startup(){
-        try{
-            const response = await fetch('');
-            const jsonObject = await response.json();
-            console.log(jsonObject);
-            
-        }catch(errorReason){
-            console.error(errorReason)
-        }
-    }
-    startup();
-
-    class kanban{
-
-        _position;
-        _name;
-        
-        kanban(name){
-            _position = 0;
-            _name = this.name;
-        }
-    }
-    </script>
+    <script type="text/javascript" src="./client.js"></script>
 </body>
 </html>
