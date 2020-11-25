@@ -4,7 +4,10 @@ const app=new Application();
 const router=new Router();
 let kanban = [];
 router
-    .get("/kanban",context=>context.response.body=kanban
+    .get("/kanban/columns",context=>context.response.body={
+        "id":"Todo",
+        "columns":["ToDo","In progress", "Done"]
+    }
     );
 app.use(router.routes());
 app.use(async context => {

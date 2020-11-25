@@ -1,8 +1,9 @@
 console.log("client works");
 async function startup(){
     try{
-        const response = await fetch('http://localhost:8000/kanban',{ mode: "no-cors" });
-        console.log(response);
+        const response = await fetch('http://localhost:8000/kanban/columns');
+        const columns = await response.json();
+        console.log(columns);
         
     }catch(errorReason){
         console.error(errorReason)
