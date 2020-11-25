@@ -9,7 +9,7 @@ router
 app.use(router.routes());
 app.use(async context => {
     await send(context, context.request.url.pathname, {
-      root: `${Deno.cwd()}`,
+      root: `${Deno.cwd()}/frontend`,
       index: "index.html",
     });
   });
