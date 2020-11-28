@@ -21,7 +21,7 @@ router
             ...items,
             item];
         id++;
-
+        context.response.status = 201;
     }
     )
     .put("/kanban/item/:id", async context => {
@@ -31,6 +31,7 @@ router
         const index = items.indexOf(olditem);
         item.id = parseInt(id, 10);
         items[index] = item
+        context.response.status = 200;
     })
     .delete("/kanban/delete/:id", async context => {
         const id = context.params.id;
