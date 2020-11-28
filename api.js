@@ -11,9 +11,6 @@ router
     }
     )
     .get("/kanban/items",context=>context.response.body= items)
-    .get("/kanban/items/todo",context=>context.response.body= items.filter(allItems=> allItems.status=="todo"))
-    .get("/kanban/items/inprogress",context=>context.response.body= items.filter(allItems=> allItems.status=="inProgress"))
-    .get("/kanban/items/done",context=>context.response.body= items.filter(allItems=> allItems.status=="done"))
     .post("/kanban/createitem",async context =>{
         const item = await context.request.body({ type: "json" }).value;
         item.id =id;
