@@ -78,9 +78,13 @@ async function update_items(){
                 if(items_ordered[pos].length > row){
                     let item = items_ordered[pos][row];
                     if(item == '+'){
-                        result += '<button id="' + pos + '">+</button>';
+                        result += '<button id="'+pos+'">+</button>';
                     }else{
-                        result += '<article class="' + item.id + '">' + item.title + '</article>';
+                        result += '<article class="' + item.id + '">' + item.title + 
+                        '<button id="edit">*</button>'+
+                        '<button id="delete">-</button>'+
+                        '<button id="left">←</button>'+
+                        '<button id="right">→</button>'+'</article>';
                     }
                 }
                 result += '</td>';
@@ -101,14 +105,3 @@ async function update_items(){
     }
 }
 startup();
-/*
-class kanban{
-
-    _position;
-    _name;
-    
-    kanban(name){
-        _position = 0;
-        _name = this.name;
-    }
-}*/
