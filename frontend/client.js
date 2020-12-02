@@ -72,7 +72,7 @@ async function update_items(){
 
         //Implementing Data to table
         for(var row = 0; row != row_length; row++){
-            result += '<tr>';
+            result += '<tr ondrop="drop(event)" ondragover="allowDrop(event)">';
             for(var pos = 0; pos != table_length; pos++){
                 result += '<td>';
                 if(items_ordered[pos].length > row){
@@ -80,7 +80,7 @@ async function update_items(){
                     if(item == '+'){
                         result += '<button id="'+pos+'">+</button>';
                     }else{
-                        result += '<article class="' + item.id + '">' + item.title + 
+                        result += '<article class="' + item.id + '" draggable="true" ondragstart="drag(event)>' + item.title + 
                         '<button id="edit">*</button>'+
                         '<button id="delete">-</button>'+
                         '<button id="left">←</button>'+
@@ -104,4 +104,17 @@ async function update_items(){
         console.error(errorReason)
     }
 }
+function allowDrop(ev) {
+    ev.preventDefault();
+  }
+  
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+  
+  function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+  }
 startup();
