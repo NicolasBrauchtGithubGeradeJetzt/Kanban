@@ -22,17 +22,20 @@ async function startup(){
 
 async function add_item(pos){
     try{
-        const response = await fetch('http://localhost:8000/kanban/createitem', {
-            method: 'POST',
-            body: JSON.stringify({
-                position: pos,
-                title: 'placeholder ' + Math.random(),
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-        });
-        update_items();
+        var title = prompt("Geben sie den Namen des Items ein");
+        if(title != null){
+            const response = await fetch('http://localhost:8000/kanban/createitem', {
+                method: 'POST',
+                body: JSON.stringify({
+                    position: pos,
+                    title: title,
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            });
+            update_items();
+        }
     }catch(errorReason){
         console.error(errorReason)
     }
