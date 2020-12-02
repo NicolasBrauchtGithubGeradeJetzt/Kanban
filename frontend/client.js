@@ -41,8 +41,23 @@ async function add_item(pos){
     }
 }
 
-async function delete_item(){
+async function delete_item(data){
     try{
+        //let item = JSON.parse(data);
+        //const response = await fetch('http://localhost:8000/kanban/delete/' + item.id);
+        update_items();
+    }catch(errorReason){
+        console.error(errorReason)
+    }
+}
+
+async function move_item(data, direction){
+    try{
+        let item = JSON.parse(data);
+        console.log(item);
+
+        //const response = await fetch('http://localhost:8000/kanban/item/' + item.id);
+        //
         update_items();
     }catch(errorReason){
         console.error(errorReason)
@@ -93,6 +108,28 @@ async function update_items(){
         }
 
         tbody.innerHTML = result;
+
+        const articles = document.querySelectorAll('article');
+
+        articles.forEach(article => {
+            let id = article.className;
+            const data = article.data;
+
+            let left = article.querySelector('');
+            let right = article.querySelector('');
+            let trash = article.querySelector('');
+            let edit = article.querySelector('');
+
+            left.addEventListener('click', () => {
+                 move_item()});
+            right.addEventListener('click', () => {
+                 move_item()});
+            trash.addEventListener('click', () => {
+                 delete_item()});
+            edit.addEventListener('click', () ={
+                
+            })
+        })
 
         const buttons = document.querySelectorAll('button');
         buttons.forEach(button => {
