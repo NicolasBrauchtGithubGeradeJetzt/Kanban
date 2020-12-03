@@ -33,6 +33,7 @@ router
     .delete("/kanban/delete/:id", async context => {
         const id = context.params.id;
         items = items.filter(i => i.id != id);
+        context.response.status = 200;
     });
 app.use(router.routes());
 app.use(async context => {

@@ -41,24 +41,28 @@ async function add_item(pos){
     }
 }
 
-async function delete_item(data){
+async function delete_item(item){
     try{
-        //let item = JSON.parse(data);
-        //const response = await fetch('http://localhost:8000/kanban/delete/' + item.id);
+        const response = await fetch('http://localhost:8000/kanban/delete/' + item.id, {
+            method: 'DELETE',
+        });
         update_items();
     }catch(errorReason){
         console.error(errorReason)
     }
 }
 
-async function move_item(data, direction){
+async function move_item(item, direction, max_length){
     try{
-        let item = JSON.parse(data);
-        console.log(item);
+        item.position = direction + parseInt(item.position);
 
-        //const response = await fetch('http://localhost:8000/kanban/item/' + item.id);
-        //
-        update_items();
+        if(item.position >= 0 && item.position < max_length){
+            const response = await fetch('http://localhost:8000/kanban/item/' + item.id, {
+                method: 'PUT',
+                body: JSON.stringify(item),
+            });
+            update_items();
+        }
     }catch(errorReason){
         console.error(errorReason)
     }
@@ -93,7 +97,7 @@ async function update_items(){
                 if(items_ordered[pos].length > row){
                     let item = items_ordered[pos][row];
                     if(item == '+'){
-                        result += '<button id="'+pos+'">+</button>';
+                        result += '<button class="add" id="'+pos+'">+</button>';
                     }else{
                         result += '<article class="' + item.id + '">' + item.title + 
                         '<button id="edit">*</button>'+
@@ -113,25 +117,25 @@ async function update_items(){
 
         articles.forEach(article => {
             let id = article.className;
-            const data = article.data;
+            const data = items.filter(item => item.id == id)[0];
 
-            let left = article.querySelector('');
-            let right = article.querySelector('');
-            let trash = article.querySelector('');
-            let edit = article.querySelector('');
+            let left = article.querySelector('#left');
+            let right = article.querySelector('#right');
+            let trash = article.querySelector('#delete');
+            let edit = article.querySelector('#edit');
 
             left.addEventListener('click', () => {
-                 move_item()});
+                 move_item(data, -1, table_length)});
             right.addEventListener('click', () => {
-                 move_item()});
+                 move_item(data, 1, table_length)});
             trash.addEventListener('click', () => {
-                 delete_item()});
-            edit.addEventListener('click', () ={
+                 delete_item(data)});
+            edit.addEventListener('click', () =>{
                 
             })
         })
 
-        const buttons = document.querySelectorAll('button');
+        const buttons = document.querySelectorAll('.add');
         buttons.forEach(button => {
             button.addEventListener('click', () => {
                 add_item(button.id);
