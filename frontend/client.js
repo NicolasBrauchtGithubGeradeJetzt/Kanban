@@ -99,7 +99,7 @@ async function update_items(){
                     if(item == '+'){
                         result += '<button class="add" id="'+pos+'">+</button>';
                     }else{
-                        result += '<article class="' + item.id + '" draggable="true" ondragstart="drag(event)>' + item.title + 
+                        result += '<article class="' + item.id + '" draggable="true" ondragstart="drag(event)">' + item.title + 
                         '<button id="edit">*</button>'+
                         '<button id="delete">-</button>'+
                         '<button id="left">←</button>'+
