@@ -68,6 +68,22 @@ async function move_item(item, direction, max_length){
     }
 }
 
+async function edit_item(item){
+    try{
+        var new_title = prompt("Geben sie den Namen des Items ein", item.title);
+        if(new_title != null){
+            item.title = new_title;
+            const response = await fetch('http://localhost:8000/kanban/item/' + item.id, {
+                method: 'PUT',
+                body: JSON.stringify(item),
+            });
+            update_items();
+        }
+    }catch(errorReason){
+        console.error(errorReason)
+    }
+}
+
 async function update_items(){
     try{
         const table_length = document.querySelectorAll('th').length;
@@ -131,8 +147,7 @@ async function update_items(){
             trash.addEventListener('click', () => {
                  delete_item(data)});
             edit.addEventListener('click', () =>{
-                
-            })
+                edit_item(data)})
         })
 
         const buttons = document.querySelectorAll('.add');
