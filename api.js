@@ -1,23 +1,24 @@
 
 import{Application,Router,send}from"https://deno.land/x/oak@v6.3.1/mod.ts";
+import { v4 } from "https://deno.land/std@0.79.0/uuid/mod.ts";
+
 const app=new Application();
 const router=new Router();
 let items = [];
-let id = 0;
 router
     .get("/kanban/columns",context=>context.response.body={
         "id":"Todo",
-        "columns":["ToDo","In progress", "Done"]
+        "columns":["ToDo"
+        ,"In progress", "Done"]
     }
     )
     .get("/kanban/items",context=>context.response.body= items)
     .post("/kanban/createitem",async context =>{
         const item = await context.request.body({ type: "json" }).value;
-        item.id =id;
+        item.id =v4.generate();
         items =[
             ...items,
             item];
-        id++;
         context.response.status = 201;
     }
     )
@@ -26,7 +27,7 @@ router
         const item = await context.request.body({ type: "json" }).value;
         const olditem = items.find(item => item.id == id);
         const index = items.indexOf(olditem);
-        item.id = parseInt(id, 10);
+        item.id = id;
         items[index] = item
         context.response.status = 200;
     })

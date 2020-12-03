@@ -107,15 +107,15 @@ async function update_items(){
 
         //Implementing Data to table
         for(var row = 0; row != row_length; row++){
-            result += '<tr ondrop="drop(event)" ondragover="allowDrop(event)">';
+            result += '<tr>';
             for(var pos = 0; pos != table_length; pos++){
-                result += '<td>';
+                result += '<td id="'+ pos +'" ondrop="drop(event)" ondragover="allowDrop(event)">';
                 if(items_ordered[pos].length > row){
                     let item = items_ordered[pos][row];
                     if(item == '+'){
                         result += '<button class="add" id="'+pos+'">+</button>';
                     }else{
-                        result += '<article class="' + item.id + '" draggable="true" ondragstart="drag(event)">' + item.title + 
+                        result += '<article id="'+item.id+'" draggable="true" ondragstart="drag(event)">' + '<div>'+item.title+'</div>' + 
                         '<button id="edit">*</button>'+
                         '<button id="delete">-</button>'+
                         '<button id="left">←</button>'+
@@ -132,7 +132,7 @@ async function update_items(){
         const articles = document.querySelectorAll('article');
 
         articles.forEach(article => {
-            let id = article.className;
+            let id = article.id;
             const data = items.filter(item => item.id == id)[0];
 
             let left = article.querySelector('#left');
@@ -165,12 +165,33 @@ function allowDrop(ev) {
   }
   
   function drag(ev) {
+      console.log(ev);
     ev.dataTransfer.setData("text", ev.target.id);
   }
   
   function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+    console.log(data);
+    move_item_byDragAndDrop(data, ev.target.id);
   }
+
+  
+async function move_item_byDragAndDrop(itemId, pos){
+    try{
+        var item = {
+            id: itemId,
+            position: pos,
+            title: document.getElementById(itemId).querySelector('div').innerText,
+        }
+            const response = await fetch('http://localhost:8000/kanban/item/' + item.id, {
+                method: 'PUT',
+                body: JSON.stringify(item),
+            });
+            update_items();
+    }catch(errorReason){
+        console.error(errorReason)
+    }
+}
+
 startup();
