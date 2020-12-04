@@ -42,3 +42,7 @@ button{
     margin-left: 1.25px;
     margin-right: 1.25px;
 }
+
+td{
+    text-align: center;
+}
