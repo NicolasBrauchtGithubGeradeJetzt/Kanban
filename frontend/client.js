@@ -113,13 +113,13 @@ async function update_items(){
                 if(items_ordered[pos].length > row){
                     let item = items_ordered[pos][row];
                     if(item == '+'){
-                        result += '<button class="add" id="'+pos+'">+</button>';
+                        result += '<button class="add" id="'+pos+'"><img src="/icons/add.svg"></button>';
                     }else{
                         result += '<article id="'+item.id+'" draggable="true" ondragstart="drag(event)">' + '<div>'+item.title+'</div>' + 
-                        '<button id="edit">*</button>'+
-                        '<button id="delete">-</button>'+
-                        '<button id="left">←</button>'+
-                        '<button id="right">→</button>'+'</article>';
+                        '<button id="edit"><img src="/icons/edit.svg"></button>'+
+                        '<button id="delete"><img src="/icons/delete.svg"></button>'+
+                        '<button id="left"><img src="/icons/arrow_left.png"></button>'+
+                        '<button id="right"><img src="/icons/arrow_right.png"></button>'+'</article>';
                     }
                 }
                 result += '</td>';
