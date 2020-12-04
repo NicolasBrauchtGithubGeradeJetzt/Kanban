@@ -8,10 +8,21 @@ let items = [];
 router
     .get("/kanban/columns",context=>context.response.body={
         "id":"Todo",
-        "columns":["ToDo"
-        ,"In progress", "Done"]
-    }
-    )
+        "columns":[
+            {
+            "id":"ToDo",
+            "title":"ToDo",
+            },
+            {
+            "id":"InProgress",
+            "title":"In Progress",
+            },
+            {
+            "id":"Done",
+            "title":"Done",
+            }
+        ]
+    })
     .get("/kanban/items",context=>context.response.body= items)
     .post("/kanban/createitem",async context =>{
         const item = await context.request.body({ type: "json" }).value;

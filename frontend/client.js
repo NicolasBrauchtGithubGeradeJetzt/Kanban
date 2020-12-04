@@ -8,7 +8,7 @@ async function startup(){
             const main = document.querySelector('main');
             var result = '<table><thead><tr>';
             columns.columns.forEach(column => {
-                result += '<th>' + column + '</th>';
+                result += '<th id="'+column.id+'">' + column.title + '</th>';
             });
             result += '</tr></thead><tbody></tbody></table>';
             main.innerHTML = result;
