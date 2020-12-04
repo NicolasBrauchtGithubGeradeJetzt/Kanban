@@ -165,30 +165,30 @@ function allowDrop(ev) {
   }
   
   function drag(ev) {
-      console.log(ev);
     ev.dataTransfer.setData("text", ev.target.id);
   }
   
   function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    console.log(data);
     move_item_byDragAndDrop(data, ev.target.id);
   }
 
   
 async function move_item_byDragAndDrop(itemId, pos){
     try{
-        var item = {
-            id: itemId,
-            position: pos,
-            title: document.getElementById(itemId).querySelector('div').innerText,
-        }
+        if(document.querySelector('td[id="' + pos + '"]') != null){
+            var item = {
+                id: itemId,
+                position: pos,
+                title: document.getElementById(itemId).querySelector('div').innerText,
+            }
             const response = await fetch('http://localhost:8000/kanban/item/' + item.id, {
                 method: 'PUT',
                 body: JSON.stringify(item),
             });
             update_items();
+        }
     }catch(errorReason){
         console.error(errorReason)
     }
